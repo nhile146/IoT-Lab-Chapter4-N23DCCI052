@@ -4,6 +4,8 @@
 **MSSV:** N23DCCI052  
 **Lớp:** D23CQCI01-N
 
+![GitHub Actions](https://github.com/nhile146/IoT-Lab-Chapter4-N23DCCI052/actions/workflows/ci.yml/badge.svg)
+![GitLab CI](https://gitlab.com/lengocyennhi9723/iot-lab-chapter4-n23dcci052/badges/main/pipeline.svg)
 ## Danh sách bài tập
 
 | BT | Nền tảng | Thư mục | Trạng thái |
