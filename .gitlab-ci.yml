@@ -13,7 +13,6 @@ flake8-lint:
     - flake8 BT1_QEMU_SystemMonitor/ --max-line-length=120 --show-source || echo 'Ignore lint errors'
     - echo '--- Lint BT2 ---'
     - flake8 BT2_QEMU_SensorSim/ --max-line-length=120 --show-source || echo 'Ignore lint errors'
-  tags: []
 
 # ===== STAGE 2: TEST =====
 test-sensor-sim:
@@ -23,7 +22,6 @@ test-sensor-sim:
     - pip install psutil matplotlib
     - echo '--- Test sensor_sim.py ---'
     - cd BT2_QEMU_SensorSim && python sensor_sim.py
-  tags: []
 
 # ===== STAGE 3: VERIFY =====
 check-structure:
@@ -38,4 +36,3 @@ check-structure:
     - "[ -f README.md ] || exit 1"
     - "[ -f .gitlab-ci.yml ] || exit 1"
     - echo 'Structure OK'
-  tags: []
