@@ -3,24 +3,39 @@ stages:
   - test
   - verify
 
-lint-job:
+# ===== STAGE 1: LINT =====
+flake8-lint:
   stage: lint
-  image: python:3.11
+  image: python:3.11-slim
   script:
     - pip install flake8
-    - flake8 . --max-line-length=120 || echo "Lint errors ignored"
+    - echo '--- Lint BT1 ---'
+    - flake8 BT1_QEMU_SystemMonitor/ --max-line-length=120 --show-source || echo 'Ignore lint errors'
+    - echo '--- Lint BT2 ---'
+    - flake8 BT2_QEMU_SensorSim/ --max-line-length=120 --show-source || echo 'Ignore lint errors'
+  tags: []
 
-test-job:
+# ===== STAGE 2: TEST =====
+test-sensor-sim:
   stage: test
-  image: python:3.11
+  image: python:3.11-slim
   script:
     - pip install psutil matplotlib
+    - echo '--- Test sensor_sim.py ---'
     - cd BT2_QEMU_SensorSim && python sensor_sim.py
+  tags: []
 
-verify-job:
+# ===== STAGE 3: VERIFY =====
+check-structure:
   stage: verify
-  image: python:3.11
+  image: alpine:latest
   script:
-    - test -f BT1_QEMU_SystemMonitor/system_monitor.py
-    - test -f BT2_QEMU_SensorSim/sensor_sim.py
-    - echo "All files verified!"
+    - echo '--- Kiểm tra cấu trúc thư mục ---'
+    - ls -R
+    - "[ -f BT1_QEMU_SystemMonitor/system_monitor.py ] || exit 1"
+    - "[ -f BT2_QEMU_SensorSim/sensor_sim.py ] || exit 1"
+    - "[ -f BT2_QEMU_SensorSim/sensor_visualize.py ] || exit 1"
+    - "[ -f README.md ] || exit 1"
+    - "[ -f .gitlab-ci.yml ] || exit 1"
+    - echo 'Structure OK'
+  tags: []
